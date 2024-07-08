@@ -1,0 +1,29 @@
+div,summary,button,h1,h3,input{
+    font-family:cursive;
+
+}
+button,h1,h3,input{
+    font-size:2em
+}
+div,summary{
+    font-size:30px;
+}
+button{
+    border:none;
+    border-radius:10px;
+    background-color:red;
+    cursor:pointer;
+}
+input{
+    cursor:pointer;
+}
+body{
+    margin:none;
+    background-color:yellow;
+}
+button:hover{
+    background-color:orange;
+}
+input:focus{
+    background-color:grey;
+}
