@@ -28,10 +28,29 @@ function getStats(jsonObject,level=0){
         else{
             var spaces=`\u00A0`.repeat(4*(level+1))
             var textNode=document.createTextNode(
-                `${spaces}${key}: ${jsonObject[key]}`
-           ) 
-           returnable.appendChild(textNode)
-           returnable.append(br.cloneNode())
+                `${spaces}${key}: `
+           )
+           var spaceP=document.createElement("p");
+           
+           if (`${jsonObject[key]}`.startsWith(`https:`)){
+                spaceP.appendChild(textNode);
+                var linkP=document.createElement("a");
+                linkP.appendChild(document.createTextNode( `${jsonObject[key]}`))
+                if(`${jsonObject[key]}`.startsWith(`https://pokeapi.co`)){
+                    linkP.addEventListener("click",function(){getPokemon(`${jsonObject[key]}`,`${jsonObject[key]}`.slice(26))})
+                }
+                else{
+                    linkP.href=`${jsonObject[key]}`
+                }
+                spaceP.appendChild(linkP)
+           }
+           else{
+            textNode.nodeValue+=`${jsonObject[key]}`
+            spaceP.append(textNode);
+           }
+           
+           
+           returnable.appendChild(spaceP)
         }
         
         
@@ -43,11 +62,19 @@ function iterateStats(jsonObject){
     space.innerHTML=""
     space.appendChild(getStats(jsonObject))
 }
-function updatePokemon(){
-    let value=document.getElementById("pokemon").value;
-    let urlName=`https://pokeapi.co/api/v2/pokemon/${value.toLowerCase()}`
+function getPokemon(urlName,reset="blank__"){
+    if (reset!="blank__"){
+        document.getElementById("pokemon").value=""
+        document.getElementById("label").innerHTML=reset
+    }
     fetch(urlName)
     .then(x=>x.json())
     .then(y=>{iterateStats(y)})
-    .catch(error=>{document.getElementById("space").innerHTML="Pokemon Not Found"})
+    .catch(error=>{document.getElementById("space").innerHTML="Not Found"})
+}
+function updatePokemon(){
+    let value=document.getElementById("pokemon").value;
+    document.getElementById("label").innerHTML=`${value}`;
+    let urlName=`https://pokeapi.co/api/v2/${value.toLowerCase()}`
+    getPokemon(urlName)
 }

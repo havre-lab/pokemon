@@ -1,11 +1,11 @@
-div,summary,button,h1,h3,input{
+div,summary,button,h1,h3,input,p,a{
     font-family:cursive;
 
 }
 button,h1,h3,input{
     font-size:2em
 }
-div,summary{
+div,summary,p,a{
     font-size:30px;
 }
 button{
@@ -26,4 +26,14 @@ button:hover{
 }
 input:focus{
     background-color:grey;
+}
+a{
+    color:blue;
+    text-decoration:underline;
+}
+a:visited{
+    color:purple;
+}
+a:active{
+    color:red;
 }
